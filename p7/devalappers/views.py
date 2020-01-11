@@ -2,12 +2,14 @@ from django.shortcuts import render , redirect
 from django.http import HttpResponse
 from django.contrib.auth.models import User , auth
 from django.contrib import messages
-from . models import Customer , Invoice
+from .models import Customer , Invoice ,Order
 
 # Create your views here.
 
 def index(request):
-    return render(request,'index.html')
+    data = Customer.objects.filter(customer_name="Mukesh bhai")
+    print(data[0])
+    return render(request,"about.html")
 
 def about(request):
     return render(request,"about.html")
