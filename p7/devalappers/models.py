@@ -21,3 +21,10 @@ class Invoice(models.Model):
     invoice_no = models.ForeignKey(Invoice ,on_delete=models.CASCADE, primary_key=True)
     date = models.DateField()
     amount = models.IntegerField()
+
+ class Payments(models.Model):
+    customer_id = models.ForeignKey(Customer , on_delete=models.CASCADE , primary_key=True)
+    invoice_no = models.ForeignKey(Invoice ,on_delete=models.CASCADE, primary_key=True)
+    pay_date = models.DateField()
+    amount_paid = models.IntegerField()
+    outstanding = models.IntegerField()
