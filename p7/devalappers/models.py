@@ -15,3 +15,9 @@ class Invoice(models.Model):
     customer = models.ForeignKey(Customer , on_delete=models.CASCADE)
     invoice_pic = models.ImageField(upload_to='invoice/images',default="Not present")
     invoice_desc = models.CharField(max_length=500,default='')
+
+ class Order(models.Model):
+    customer_id = models.ForeignKey(Customer , on_delete=models.CASCADE , primary_key=True)
+    invoice_no = models.ForeignKey(Invoice ,on_delete=models.CASCADE, primary_key=True)
+    date = models.DateField()
+    amount = models.IntegerField()
