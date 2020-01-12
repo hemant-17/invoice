@@ -7,9 +7,9 @@ from .models import Customer , Invoice ,Order
 # Create your views here.
 
 def index(request):
-    data = Customer.objects.filter(customer_name="Mukesh bhai")
-    print(data[0])
-    return render(request,"about.html")
+    customer = Customer.objects.all().prefetch_related("invoice")
+    #invoice = Invoice.objects.all()
+    return render(request,'index.html',{'customer':customer})
 
 def about(request):
     return render(request,"about.html")
@@ -68,12 +68,8 @@ def logout(request):
     return redirect('/')
 
 def invoice(request):
-    data = Invoice.objects.all()
-    params = {'invoice_id': data }
-
-
-
-    return render(request,'invoice.html',params)
+    data = Customer.objects.raw('SELECT * from Customer as c join Invoice as i where c.customer_id=i.customer')
+    return render(request,'invoice.html',{'data':data})
 
 def wallet(request):
     return HttpResponse("this is wallet")
