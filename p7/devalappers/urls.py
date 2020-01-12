@@ -9,7 +9,7 @@ urlpatterns = [
     path('signin/',views.signin,name='signin'),
     path('login/',views.login,name='login'),
     path('logout/',views.logout,name='logout'),
-    path('invoice/',views.invoice,name='invoice'),
+    path('invoice/',views.InvoiceListView.as_view()),
     path('wallet/',views.wallet,name='wallet'),
     path('outstanding/',views.outstanding,name='outstanding'),
     path('advancepay/',views.advancepay,name='advancepay'),

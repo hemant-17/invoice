@@ -2,14 +2,16 @@ from django.shortcuts import render , redirect
 from django.http import HttpResponse
 from django.contrib.auth.models import User , auth
 from django.contrib import messages
-from .models import Customer , Invoice ,Order
+from . models import Customer , Invoice , Profile
+from django.views.generic.list import ListView
+from django.views.generic.detail import DetailView
+from django.utils.decorators import method_decorator
+from django.contrib.auth.decorators import login_required
 
 # Create your views here.
 
 def index(request):
-    customer = Customer.objects.all().prefetch_related("invoice")
-    #invoice = Invoice.objects.all()
-    return render(request,'index.html',{'customer':customer})
+    return render(request,'index.html')
 
 def about(request):
     return render(request,"about.html")
@@ -67,9 +69,26 @@ def logout(request):
     auth.logout(request)
     return redirect('/')
 
-def invoice(request):
-    data = Customer.objects.raw('SELECT * from Customer as c join Invoice as i where c.customer_id=i.customer')
-    return render(request,'invoice.html',{'data':data})
+
+@method_decorator(login_required,name="dispatch")
+class InvoiceListView(ListView):
+
+    template_name = 'invoice.html'
+    context_object_name = 'invoice_id'
+    model = Invoice
+
+    def get_queryset(self):
+        #return Invoice.objects.filter(customer_id=self.request.user.profile.customer_id)
+        #print (Invoice.objects.filter(customer_id=1)
+
+        return Invoice.objects.filter(customer_id=self.request.user.profile.customer_id)
+
+
+
+@method_decorator(login_required,name="dispatch")
+class InvoiceDetailView(DetailView):
+    model = Invoice
+
 
 def wallet(request):
     return HttpResponse("this is wallet")
