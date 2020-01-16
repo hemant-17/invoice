@@ -23,7 +23,7 @@ def about(request):
     return render(request,"about.html")
 
 def contact(request):
-    return HttpResponse("this is our contact")
+    return render(request,'contact.html')
 
 def signin(request):
     if request.method=='POST':
