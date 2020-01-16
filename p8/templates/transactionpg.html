@@ -1,27 +1,26 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
+{% extends basic.html %}
+{% head block %}
 	<title>Table V02</title>
 	<meta charset="UTF-8">
 	<meta name="viewport" content="width=device-width, initial-scale=1">
 <!--===============================================================================================-->	
-	<link rel="icon" type="image/png" href="images/icons/favicon.ico"/>
+	<link rel="icon" type="image/png" href="{% static 'images/icons/favicon.ico' %}"/>
 <!--===============================================================================================-->
-	<link rel="stylesheet" type="text/css" href="vendor/bootstrap/css/bootstrap.min.css">
+	<link rel="stylesheet" type="text/css" href="{% static 'vendor/bootstrap/css/bootstrap.min.css' %}">
 <!--===============================================================================================-->
-	<link rel="stylesheet" type="text/css" href="fonts/font-awesome-4.7.0/css/font-awesome.min.css">
+	<link rel="stylesheet" type="text/css" href="{% static 'fonts/font-awesome-4.7.0/css/font-awesome.min.css' %}">
 <!--===============================================================================================-->
-	<link rel="stylesheet" type="text/css" href="vendor/animate/animate.css">
+	<link rel="stylesheet" type="text/css" href="{% static 'vendor/animate/animate.css' %}">
 <!--===============================================================================================-->
-	<link rel="stylesheet" type="text/css" href="vendor/select2/select2.min.css">
+	<link rel="stylesheet" type="text/css" href="{% static 'vendor/select2/select2.min.css' %}">
 <!--===============================================================================================-->
-	<link rel="stylesheet" type="text/css" href="vendor/perfect-scrollbar/perfect-scrollbar.css">
+	<link rel="stylesheet" type="text/css" href="{% static 'vendor/perfect-scrollbar/perfect-scrollbar.css' %}">
 <!--===============================================================================================-->
-	<link rel="stylesheet" type="text/css" href="css/util.css">
-	<link rel="stylesheet" type="text/css" href="css/main.css">
+	<link rel="stylesheet" type="text/css" href="{% static 'css/util.css' %}">
+	<link rel="stylesheet" type="text/css" href="{% static 'css/main.css' %}">
 <!--===============================================================================================-->
-</head>
-<body>
+{% endblock %}
+{% body block %}
 	
 	<div class="limiter">
 		<div class="container-table100">
@@ -42,23 +41,23 @@
 								Amount
 							</div>
 						</div>
-
+						{% for invoice in invoice_id %}
 						<div class="row">
 							<div class="cell" data-title="Full Name">
-								Vincent Williamson
+								{{ invoice.customer_id }}
 							</div>
 							<div class="cell" data-title="Age">
 								Credit
 							</div>
 							<div class="cell" data-title="Job Title">
-								12th Sep 2019
+								{{ invoice.date }}
 							</div>
 							<div class="cell" data-title="Location">
 								556
 							</div>
 						</div>
 
-						<div class="row">
+						<!--<div class="row">
 							<div class="cell" data-title="Full Name">
 								Joseph Smith
 							</div>
@@ -161,7 +160,7 @@
 							<div class="cell" data-title="Location">
 								456
 							</div>
-						</div>
+						</div>-->
 
 					</div>
 			</div>
@@ -172,14 +171,14 @@
 	
 
 <!--===============================================================================================-->	
-	<script src="vendor/jquery/jquery-3.2.1.min.js"></script>
+	<script src="{% static 'vendor/jquery/jquery-3.2.1.min.js' %}"></script>
 <!--===============================================================================================-->
-	<script src="vendor/bootstrap/js/popper.js"></script>
-	<script src="vendor/bootstrap/js/bootstrap.min.js"></script>
+	<script src="{% static 'vendor/bootstrap/js/popper.js' %}"></script>
+	<script src="{% static 'vendor/bootstrap/js/bootstrap.min.js' %}"></script>
 <!--===============================================================================================-->
-	<script src="vendor/select2/select2.min.js"></script>
+	<script src="{% static 'vendor/select2/select2.min.js' %}"></script>
 <!--===============================================================================================-->
-	<script src="js/main.js"></script>
+	<script src="{% static 'js/main.js' %}"></script>
 
-</body>
+{% endblock %}
 </html>
