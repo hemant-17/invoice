@@ -176,11 +176,11 @@ def update_balance():
 
         print(bal.balance)
 
-@permission_required(login_url = 'login/')
+@login_required(login_url = 'login/')
 def outstanding(request):
    return HttpResponse("this is outstanding ")
 
-@permission_required(login_url = 'login/')
+@login_required(login_url = 'login/')
 def advancepay(request):
     return HttpResponse("this is advance pay ")
 
@@ -244,7 +244,7 @@ class Invoice_settleListView(ListView):
 @method_decorator(login_required,name="dispatch")
 class Invoice_settleDetailView(DetailView):
     model = Invoice
-@permission_required(login_url = 'login/')
+@login_required(login_url = 'login/')
 def passbook(request):
     return HttpResponse("this is passbook ")
 
