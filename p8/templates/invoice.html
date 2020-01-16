@@ -1,0 +1,132 @@
+{% extends 'basic.html' %}
+
+{% block title %} Invoices {% endblock %}
+
+  {% block body %}
+
+    {% for invoice in invoice_id %}
+    <div class="mt-5">{{ invoice.customer_id }}</div>
+      <div class="container mt-5">
+    <div class="list-group">
+
+      <table class="table table-striped table-bordered">
+        <thead>
+          <tr>
+            <th scope="col">invoice_id</th>
+            <th scope="col">invoice description</th>
+            <th scope="col">date</th>
+            <th scope="col">outstanding</th>
+            <th scope="col">view</th>
+            <th scope="col">due_date</th>
+          </tr>
+        </thead>
+        {% endfor %}
+        <tbody>
+          {% for invoice in invoice_id %}
+          <tr>
+            <td>{{ invoice.invoice_id }}</td>
+            <td>{{ invoice.invoice_desc }}</td>
+            <td>{{ invoice.date }}</td>
+            <td>{{ invoice.outstanding }}</td>
+            <td><a href="/media/{{ invoice.invoice_pic }}" target="_blank">Open Invoice
+              </a></td>
+            {% if invoice.outstanding is not null %}
+            <td class="bg-danger ">
+              <a href="/login/wallet"><B><font color="Black">Clear outstanding</font></B></a>
+              </td>
+              {% else %}
+              <td class="bg-success">cleared </td>
+              {% endif %}
+          </tr>
+          {% endfor %}
+        </tbody>
+      </table>
+
+    <!-- Optional JavaScript -->
+    <!-- jQuery first, then Popper.js, then Bootstrap JS -->
+    <script src="https://code.jquery.com/jquery-3.4.1.slim.min.js" integrity="sha384-J6qa4849blE2+poT4WnyKhv5vZF5SrPo0iEjwBvKU7imGFAV0wwj1yYfoRSJoZ+n" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js" integrity="sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo" crossorigin="anonymous"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js" integrity="sha384-wfSDF2E50Y2D1uUdj0O3uMBJnjuUD4Ih7YwaYd1iqfktj0Uod8GCExl3Og8ifwB6" crossorigin="anonymous"></script>
+    {% endblock %}
+<!--
+    <a href="#" class="list-group-item list-group-item-action">
+          <div class="d-flex w-100 justify-content-between">
+            <h5 class="mb-1">List group item heading</h5>
+            <small class="text-muted">3 days ago</small>
+          </div>
+          <p class="mb-1">Donec id elit non mi porta gravida at eget metus. Maecenas sed diam eget risus varius blandit.</p>
+          <small class="text-muted">Donec id elit non mi porta.</small>
+        </a>
+        <a href="#" class="list-group-item list-group-item-action">
+          <div class="d-flex w-100 justify-content-between">
+            <h5 class="mb-1">List group item heading</h5>
+            <small class="text-muted">3 days ago</small>
+          </div>
+          <p class="mb-1">Donec id elit non mi porta gravida at eget metus. Maecenas sed diam eget risus varius blandit.</p>
+          <small class="text-muted">Donec id elit non mi porta.</small>
+        </a>
+      </div>
+-->
+
+
+
+
+<!--<!doctype html>
+<html lang="en">
+  <head>
+     Required meta tags
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+     Bootstrap CSS
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css" integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
+
+    <title>Invoices</title>
+  </head>
+  <body>
+      <div class="container mt-5">
+    <div class="list-group">
+
+
+          <div class="d-flex w-100 justify-content-between">
+
+                   {{ invoice.date }}
+                   <img src="/media/{{ invoice.invoice_pic }}">
+                   {{ invoice.outstanding }}
+
+
+
+                {{ invoice.invoice_desc }}
+
+
+
+
+
+    </div>
+
+   Optional JavaScript
+  jQuery first, then Popper.js, then Bootstrap JS
+    <script src="https://code.jquery.com/jquery-3.4.1.slim.min.js" integrity="sha384-J6qa4849blE2+poT4WnyKhv5vZF5SrPo0iEjwBvKU7imGFAV0wwj1yYfoRSJoZ+n" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js" integrity="sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo" crossorigin="anonymous"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js" integrity="sha384-wfSDF2E50Y2D1uUdj0O3uMBJnjuUD4Ih7YwaYd1iqfktj0Uod8GCExl3Og8ifwB6" crossorigin="anonymous"></script>
+  </body>
+</html>-->
+<!--
+    <a href="#" class="list-group-item list-group-item-action">
+          <div class="d-flex w-100 justify-content-between">
+            <h5 class="mb-1">List group item heading</h5>
+            <small class="text-muted">3 days ago</small>
+          </div>
+          <p class="mb-1">Donec id elit non mi porta gravida at eget metus. Maecenas sed diam eget risus varius blandit.</p>
+          <small class="text-muted">Donec id elit non mi porta.</small>
+        </a>
+        <a href="#" class="list-group-item list-group-item-action">
+          <div class="d-flex w-100 justify-content-between">
+            <h5 class="mb-1">List group item heading</h5>
+            <small class="text-muted">3 days ago</small>
+          </div>
+          <p class="mb-1">Donec id elit non mi porta gravida at eget metus. Maecenas sed diam eget risus varius blandit.</p>
+          <small class="text-muted">Donec id elit non mi porta.</small>
+        </a>
+      </div>
+-->

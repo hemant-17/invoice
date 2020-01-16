@@ -1,0 +1,17 @@
+{% extends 'basic.html' %}
+{% block title %} Settle Invoice {% endblock %}
+
+{% block body %}
+<div class="container">
+    {% for message in messages %}<div class="container">
+        <div class="row">
+               <div class="alert alert-danger mt-5" role="alert">{{message}}</div>
+             {% endfor %}
+{% for i in invoice_id %}
+<h4>Your outstanding is :₹</h4>
+<h1>{{i.outstanding}}</h1> <h4>from Invoice id {{ i.invoice_id }}</h4>
+{% endfor %}
+<a href="/login/settle/">
+<button id="add_money" class="btn btn-primary mt-4">Settle Invoice</button></a>
+</div>
+{% endblock %}
