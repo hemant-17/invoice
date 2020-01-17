@@ -1,6 +1,9 @@
 from django.shortcuts import render
 
 # Create your views here.
+from p8.settings import EMAIL_HOST_USER
+#from . import forms
+from django.core.mail import send_mail
 from django.shortcuts import render , redirect
 from django.http import HttpResponse
 from django.contrib.auth.models import User , auth
@@ -13,18 +16,34 @@ from django.contrib.auth.decorators import login_required, permission_required
 from django.views.decorators.csrf import csrf_exempt
 from . paytm import checksum
 MERCHANT_KEY = 'npI_h5KJ6!BxemZ4'
-dict1 = {'order':True ,'amt':0 , 'user':'hemant'}
+dict1 = {'order':True ,'amt':0 , 'user':'to'}
 
 
 # Create your views here.
 
 def index(request):
-    return render(request,'index.html')
+    return render(request,'home.html')
 
 def about(request):
     return render(request,"about.html")
 
 def contact(request):
+    #sub = forms.Subscribe()
+    if request.method == 'POST':
+        #email = request.POST.get('email','')
+        name=request.POST.get('name','')
+        email=request.POST.get('email','')
+        subject = request.POST.get('subject','')
+        message = request.POST.get('message','')
+
+        print(email)
+        #sub = forms.Subscribe(request.POST)
+        subject = str(subject)
+        message = str(message)
+        recepient = str(email)
+        send_mail(subject, message, EMAIL_HOST_USER, [recepient], fail_silently = False)
+        #return render(request, 'subscribe/success.html', {'recepient': recepient})'''
+
     return render(request,'contact.html')
 
 def signin(request):
@@ -65,6 +84,7 @@ def login(request):
 
         if User is not None:
             auth.login(request ,User)
+            dict1['user'] = request.user.username
             return redirect('/')
         else:
              messages.info(request,'Invalid Credentials')
@@ -95,6 +115,7 @@ class InvoiceListView(ListView):
 class InvoiceDetailView(DetailView):
     model = Invoice
 
+
 def wallet(request):
     def get_queryset(self):
         #return Invoice.objects.filter(customer_id=self.request.user.profile.customer_id)
@@ -113,6 +134,10 @@ def wallet(request):
         print(request.user.email)
         dict1['amt'] = amount
         dict1['user'] = request.user.username
+        print(request.user.username)
+        bal = Wallet.objects.get(username=dict1['user'])
+        bal = bal.balance
+        print(bal)
 
 
         param_dict = {
@@ -176,11 +201,10 @@ def update_balance():
 
         print(bal.balance)
 
-@login_required(login_url = 'login/')
+
 def outstanding(request):
    return HttpResponse("this is outstanding ")
 
-@login_required(login_url = 'login/')
 def advancepay(request):
     return HttpResponse("this is advance pay ")
 
@@ -207,6 +231,7 @@ class Invoice_settleListView(ListView):
     template_name = 'settle_invoice.html'
     context_object_name = 'invoice_id'
     model = Invoice
+
     def get_queryset(self):
         #return Invoice.objects.filter(customer_id=self.request.user.profile.customer_id)
         #print (Invoice.objects.filter(customer_id=1)
@@ -214,19 +239,22 @@ class Invoice_settleListView(ListView):
         #self.resp = Invoice.objects.filter(customer_id=self.request.user.profile.customer_id)
         return Invoice.objects.filter(customer_id=self.request.user.profile.customer_id)
     def settle(self):
-        bal = Wallet.objects.get(username=dict1['user'])
+
         #resp = Invoice.objects.filter(customer_id=self.user.profile.customer_id).values_list('outstanding')
         resp = Invoice.objects.values_list('outstanding', flat=True).get(customer_id=self.user.profile.customer_id)
         #for i in invoice_id:
             #out = i.outstanding
             #print(out)
         print(resp)
+        print(self.user.username)
+        bal =Wallet.objects.get(username = self.user.username)
 
         print(bal.balance)
         if(bal.balance < resp):
             messages.info(self,'Please add money in Wallet to clear your outstanding')
             return redirect('/login/wallet')
         else:
+
             bal.balance = bal.balance - resp
             bal.save()
             resp = 0
@@ -244,9 +272,9 @@ class Invoice_settleListView(ListView):
 @method_decorator(login_required,name="dispatch")
 class Invoice_settleDetailView(DetailView):
     model = Invoice
-@login_required(login_url = 'login/')
-def passbook(request):
-    return HttpResponse("this is passbook ")
+
+def offline_transfer(request):
+    return render(request,'offline_transfer.html')
 
 #def update_balance(curr_balance):
 
@@ -307,3 +335,4 @@ def add_money(request):
         return render(request,'/login/passbook/')
 
     """
+
