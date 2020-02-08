@@ -12,7 +12,7 @@ from django.utils.decorators import method_decorator
 from django.contrib.auth.decorators import login_required
 from django.views.decorators.csrf import csrf_exempt
 from . paytm import checksum
-MERCHANT_KEY = 'npI_h5KJ6!BxemZ4'
+MERCHANT_KEY = 'your key'
 
 # Create your views here.
 
@@ -105,7 +105,7 @@ def wallet(request):
 
 
         param_dict = {
-            'MID':'AhagdK84355164141885',
+            'MID':'your id',
             'ORDER_ID':str(wallet.invoice_id),
             'TXN_AMOUNT':str(amount),
             'CUST_ID': email,
